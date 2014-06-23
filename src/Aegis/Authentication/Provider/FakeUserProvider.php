@@ -13,8 +13,8 @@ namespace Aegis\Authentication\Provider;
 
 use Aegis\Authentication\Provider\AuthenticationProviderInterface;
 use Aegis\Authentication\Token\AuthenticationTokenInterface;
-use Aegis\Authentication\Token\FakeUserToken;
-use Aegis\User\FakeUser;
+use Aegis\Authentication\Token\TestUserToken;
+use Aegis\User\TestUser;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -44,7 +44,7 @@ class FakeUserProvider implements AuthenticationProviderInterface
     public function present()
     {
         if ('true' === $this->request->query->get('login')) {
-            return new FakeUserToken();
+            return new TestUserToken();
         }
     }
 
@@ -53,7 +53,7 @@ class FakeUserProvider implements AuthenticationProviderInterface
      */
     public function authenticate(AuthenticationTokenInterface $token)
     {
-        $token->setUser(new FakeUser());
+        $token->setUser(new TestUser());
 
         // Do something to validate user credentials from token
         $token->setAuthenticated(count($token->getUser()->getRoles()) > 0);
@@ -66,6 +66,6 @@ class FakeUserProvider implements AuthenticationProviderInterface
      */
     public function supports()
     {
-        return FakeUserToken::class;
+        return TestUserToken::class;
     }
 }

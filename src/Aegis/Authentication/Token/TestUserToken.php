@@ -16,11 +16,11 @@ use Aegis\User\FakeUser;
 use Aegis\User\UserInterface;
 
 /**
- * Fake User Token
+ * Test User Token
  *
  * @author Elliot Wright <elliot@elliotwright.co>
  */
-class FakeUserToken implements AuthenticationTokenInterface
+class TestUserToken implements AuthenticationTokenInterface
 {
     private $authenticated;
     private $user;

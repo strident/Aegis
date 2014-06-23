@@ -77,7 +77,7 @@ class AnonymousToken implements AuthenticationTokenInterface
      */
     public function isAuthenticated()
     {
-        return true;
+        return false;
     }
 
     /**

@@ -18,15 +18,15 @@ use Aegis\User\UserInterface;
  *
  * @author Elliot Wright <elliot@elliotwright.co>
  */
-class FakeUser implements UserInterface
+class TestUser implements UserInterface
 {
     public function getUsername()
     {
-        return 'FakeUser';
+        return 'Seer';
     }
 
     public function getRoles()
     {
-        return ['ROLE_FAKE'];
+        return ['ROLE_USER', 'ROLE_ADMIN'];
     }
 }
