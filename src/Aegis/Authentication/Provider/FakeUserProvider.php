@@ -53,6 +53,7 @@ class FakeUserProvider implements AuthenticationProviderInterface
      */
     public function authenticate(AuthenticationTokenInterface $token)
     {
+        // This would be where you'd grab the real user object.
         $token->setUser(new TestUser());
 
         // Do something to validate user credentials from token

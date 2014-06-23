@@ -26,7 +26,7 @@ class AnonymousToken implements AuthenticationTokenInterface
 
     public function __construct()
     {
-        $this->user = new AnonymousUser();
+        $this->user = 'AnonymousUser';
     }
 
     /**

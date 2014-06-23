@@ -76,6 +76,7 @@ class Aegis
      */
     public function authenticate(AuthenticationTokenInterface $token = null)
     {
+        // If no token is passed in, try and find one from the provider
         $token = $token ?: $this->provider->present();
 
         if ( ! $token instanceof AuthenticationTokenInterface) {
