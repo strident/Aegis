@@ -9,25 +9,18 @@
  * file that was distributed with this source code.
  */
 
-namespace Aegis\Authentication\Provider;
+namespace Aegis\Authentication\Authenticator;
 
 use Aegis\Authentication\Token\AuthenticationTokenInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * Authentication Provider Interface
+ * Authenticator Interface
  *
  * @author Elliot Wright <elliot@elliotwright.co>
  */
-interface AuthenticationProviderInterface
+interface AuthenticatorInterface
 {
-    /**
-     * Present a token to authenticate, populated with all required information.
-     *
-     * @return AuthenticationTokenInterface
-     */
-    public function present();
-
     /**
      * Authenticate a token.
      *

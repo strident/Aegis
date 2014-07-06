@@ -12,7 +12,7 @@
 namespace Aegis;
 
 use Aegis\Exception\AuthenticationException;
-use Aegis\Authentication\Provider\AuthenticationProviderInterface;
+use Aegis\Authentication\Authenticator\AuthenticatorInterface;
 use Aegis\Authentication\Token\AnonymousToken;
 use Aegis\Authentication\Token\AuthenticationTokenInterface;
 use Aegis\Storage\StorageInterface;
@@ -27,8 +27,8 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class Aegis
 {
+    protected $authenticator;
     protected $initialized = false;
-    protected $provider;
     protected $storage;
     protected $token;
 
@@ -43,8 +43,8 @@ class Aegis
      */
     public function initialize()
     {
-        if ( ! isset($this->provider)) {
-            throw new \RuntimeException('Aegis is missing an authentication provider.');
+        if ( ! isset($this->authenticator)) {
+            throw new \RuntimeException('Aegis is missing an authentication authenticator.');
         }
 
         if ( ! isset($this->storage)) {
@@ -76,8 +76,8 @@ class Aegis
      */
     public function authenticate(AuthenticationTokenInterface $token = null)
     {
-        // If no token is passed in, try and find one from the provider
-        $token = $token ?: $this->provider->present();
+        // If no token is passed in, try and find one from the authenticator
+        $token = $token ?: $this->authenticator->present();
 
         if ( ! $token instanceof AuthenticationTokenInterface) {
             return new Result(Result::NO_TOKEN);
@@ -86,7 +86,7 @@ class Aegis
         $result = new Result();
 
         try {
-            $token = $this->provider->authenticate($token);
+            $token = $this->authenticator->authenticate($token);
         } catch (AuthenticationException $e) {
             // If all other types of exception have been missed, but the
             // exception thrown is still an authentication exception catch it,
@@ -107,27 +107,27 @@ class Aegis
     }
 
     /**
-     * Set provider.
+     * Set authenticator.
      *
-     * @param AuthenticationProviderInterface $provider
+     * @param AuthenticatorInterface $authenticator
      *
      * @return Aegis
      */
-    public function setProvider(AuthenticationProviderInterface $provider)
+    public function setAuthenticator(AuthenticatorInterface $authenticator)
     {
-        $this->provider = $provider;
+        $this->authenticator = $authenticator;
 
         return $this;
     }
 
     /**
-     * Get provider.
+     * Get authenticator.
      *
-     * @return AuthenticationProviderInterface
+     * @return AuthenticatorInterface
      */
-    public function getProvider()
+    public function getAuthenticator()
     {
-        return $this->provider;
+        return $this->authenticator;
     }
 
     /**
@@ -155,20 +155,6 @@ class Aegis
     }
 
     /**
-     * Get token.
-     *
-     * @return AuthenticationTokenInterface
-     */
-    public function getToken()
-    {
-        if ( ! $this->initialized) {
-            $this->initialize();
-        }
-
-        return $this->token;
-    }
-
-    /**
      * Set token.
      *
      * @param AuthenticationTokenInterface $token
@@ -180,5 +166,19 @@ class Aegis
         $this->token = $token;
 
         return $this;
+    }
+
+    /**
+     * Get token.
+     *
+     * @return AuthenticationTokenInterface
+     */
+    public function getToken()
+    {
+        if ( ! $this->initialized) {
+            $this->initialize();
+        }
+
+        return $this->token;
     }
 }
