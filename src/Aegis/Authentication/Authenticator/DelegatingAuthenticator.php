@@ -36,7 +36,7 @@ class DelegatingAuthenticator implements AuthenticatorInterface
      */
     public function addAuthenticator(AuthenticatorInterface $authenticator)
     {
-        $this->authenticators[$authenticator->supports()] = $authenticator;
+        $this->authenticators[] = $authenticator;
 
         return $this;
     }
@@ -92,8 +92,9 @@ class DelegatingAuthenticator implements AuthenticatorInterface
     /**
      * {@inheritDoc}
      */
-    public function supports()
+    public function supports(AuthenticationTokenInterface $token)
     {
+        return (bool) $this->resolveAuthenticator($token);
     }
 
     /**
@@ -105,13 +106,31 @@ class DelegatingAuthenticator implements AuthenticatorInterface
      */
     private function delegateAuthenticator(AuthenticationTokenInterface $token)
     {
-        if ( ! isset($this->authenticators[get_class($token)])) {
+        if ( ! $authenticator = $this->resolveAuthenticator($token)) {
             throw new \RuntimeException(sprintf(
                 'No authentication authenticator found for token: "%s".',
                 get_class($token)
             ));
         }
 
-        return $this->authenticators[get_class($token)];
+        return $authenticator;
+    }
+
+    /**
+     * Resolve a token to its authenticator.
+     *
+     * @param AuthenticationTokenInterface $token
+     *
+     * @return mixed
+     */
+    private function resolveAuthenticator(AuthenticationTokenInterface $token)
+    {
+        foreach ($this->authenticators as $authenticator) {
+            if ($authenticator->supports($token)) {
+                return $authenticator;
+            }
+        }
+
+        return false;
     }
 }

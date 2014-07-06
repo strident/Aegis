@@ -12,6 +12,7 @@
 namespace Aegis\Exception;
 
 use Aegis\Authentication\Token\AuthenticationTokenInterface;
+use Aegis\Authentication\Result;
 
 /**
  * Authentication Exception
@@ -30,7 +31,7 @@ class AuthenticationException extends \RuntimeException
      * @param integer                      $code
      * @param \Exception                   $previous
      */
-    public function __construct(AuthenticationTokenInterface $token, $message = '', $code = 0, \Exception $previous = null)
+    public function __construct(AuthenticationTokenInterface $token, $message = '', $code = Result::FAILURE, \Exception $previous = null)
     {
         $this->token = $token;
 

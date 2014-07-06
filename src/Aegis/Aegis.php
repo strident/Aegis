@@ -15,9 +15,9 @@ use Aegis\Exception\AuthenticationException;
 use Aegis\Authentication\Authenticator\AuthenticatorInterface;
 use Aegis\Authentication\Token\AnonymousToken;
 use Aegis\Authentication\Token\AuthenticationTokenInterface;
+use Aegis\Authentication\Result;
 use Aegis\Storage\StorageInterface;
 use Aegis\User\UserInterface;
-use Aegis\Result;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -88,10 +88,8 @@ class Aegis
         try {
             $token = $this->authenticator->authenticate($token);
         } catch (AuthenticationException $e) {
-            // If all other types of exception have been missed, but the
-            // exception thrown is still an authentication exception catch it,
-            // allowing any non-authentication related exceptions to bubble up.
-            $result->setCode(Result::UNKNOWN);
+            $result->setCode($e->getCode());
+            $result->setException($e);
             $result->setToken($e->getToken());
 
             return $result;

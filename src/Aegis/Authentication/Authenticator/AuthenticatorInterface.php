@@ -33,7 +33,9 @@ interface AuthenticatorInterface
     /**
      * Returns the name of the class that this provider supports.
      *
+     * @param AuthenticationTokenInterface $token
+     *
      * @return string
      */
-    public function supports();
+    public function supports(AuthenticationTokenInterface $token);
 }
