@@ -12,8 +12,8 @@
 namespace Aegis\Authentication\Authenticator;
 
 use Aegis\Authentication\Authenticator\AuthenticatorInterface;
-use Aegis\Authentication\Token\AuthenticationTokenInterface;
 use Aegis\Exception\AuthenticationException;
+use Aegis\Token\TokenInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -36,7 +36,7 @@ class DelegatingAuthenticator implements AuthenticatorInterface
      */
     public function addAuthenticator(AuthenticatorInterface $authenticator)
     {
-        $this->authenticators[] = $authenticator;
+        $this->authenticators[get_class($authenticator)] = $authenticator;
 
         return $this;
     }
@@ -82,7 +82,7 @@ class DelegatingAuthenticator implements AuthenticatorInterface
     /**
      * {@inheritDoc}
      */
-    public function authenticate(AuthenticationTokenInterface $token)
+    public function authenticate(TokenInterface $token)
     {
         $authenticator = $this->delegateAuthenticator($token);
 
@@ -92,7 +92,7 @@ class DelegatingAuthenticator implements AuthenticatorInterface
     /**
      * {@inheritDoc}
      */
-    public function supports(AuthenticationTokenInterface $token)
+    public function supports(TokenInterface $token)
     {
         return (bool) $this->resolveAuthenticator($token);
     }
@@ -104,7 +104,7 @@ class DelegatingAuthenticator implements AuthenticatorInterface
      *
      * @return DelegatingAuthenticator
      */
-    private function delegateAuthenticator(AuthenticationTokenInterface $token)
+    private function delegateAuthenticator(TokenInterface $token)
     {
         if ( ! $authenticator = $this->resolveAuthenticator($token)) {
             throw new \RuntimeException(sprintf(
@@ -123,7 +123,7 @@ class DelegatingAuthenticator implements AuthenticatorInterface
      *
      * @return mixed
      */
-    private function resolveAuthenticator(AuthenticationTokenInterface $token)
+    private function resolveAuthenticator(TokenInterface $token)
     {
         foreach ($this->authenticators as $authenticator) {
             if ($authenticator->supports($token)) {

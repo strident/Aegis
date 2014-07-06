@@ -11,8 +11,8 @@
 
 namespace Aegis\Authentication;
 
-use Aegis\Authentication\Token\AuthenticationTokenInterface;
 use Aegis\Exception\AuthenticationException;
+use Aegis\Token\TokenInterface;
 
 /**
  * Authentication Result
@@ -97,7 +97,7 @@ class Result
      *
      * @return Result
      */
-    public function setToken(AuthenticationTokenInterface $token)
+    public function setToken(TokenInterface $token)
     {
         $this->token = $token;
 

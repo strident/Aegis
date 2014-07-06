@@ -9,16 +9,16 @@
  * file that was distributed with this source code.
  */
 
-namespace Aegis\Authentication\Token;
+namespace Aegis\Token;
 
 use Aegis\User\UserInterface;
 
 /**
- * Authentication Token Interface
+ * Token Interface
  *
  * @author Elliot Wright <elliot@elliotwright.co>
  */
-interface AuthenticationTokenInterface
+interface TokenInterface
 {
     /**
      * Get roles.

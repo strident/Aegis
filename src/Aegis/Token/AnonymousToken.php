@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace Aegis\Authentication\Token;
+namespace Aegis\Token;
 
-use Aegis\Authentication\Token\AuthenticationTokenInterface;
+use Aegis\Token\TokenInterface;
 use Aegis\User\AnonymousUser;
 use Aegis\User\UserInterface;
 
@@ -20,7 +20,7 @@ use Aegis\User\UserInterface;
  *
  * @author Elliot Wright <elliot@elliotwright.co>
  */
-class AnonymousToken implements AuthenticationTokenInterface
+class AnonymousToken implements TokenInterface
 {
     private $user;
 

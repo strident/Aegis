@@ -11,7 +11,7 @@
 
 namespace Aegis\Authentication\Authenticator;
 
-use Aegis\Authentication\Token\AuthenticationTokenInterface;
+use Aegis\Token\TokenInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -28,7 +28,7 @@ interface AuthenticatorInterface
      *
      * @return AuthenticationTokenInterface
      */
-    public function authenticate(AuthenticationTokenInterface $token);
+    public function authenticate(TokenInterface $token);
 
     /**
      * Returns the name of the class that this provider supports.
@@ -37,5 +37,5 @@ interface AuthenticatorInterface
      *
      * @return string
      */
-    public function supports(AuthenticationTokenInterface $token);
+    public function supports(TokenInterface $token);
 }
