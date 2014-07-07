@@ -140,7 +140,7 @@ class Aegis
         $token = $this->storage->read();
 
         // Re-authenticate stored token
-        if ($token instanceof AuthenticationTokenInterface) {
+        if ($token instanceof TokenInterface) {
             $result = $this->authenticate($token);
         }
 
