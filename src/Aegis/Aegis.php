@@ -83,6 +83,19 @@ class Aegis
     }
 
     /**
+     * Use the anonymous token again, replace any existing token
+     *
+     * @return Aegis
+     */
+    public function unauthenticate()
+    {
+        $this->storage->clear();
+        $this->setToken(new AnonymousToken());
+
+        return $this;
+    }
+
+    /**
      * Check if the current token is granted permissions.
      *
      * @param mixed  $attributes
