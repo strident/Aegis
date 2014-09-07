@@ -94,7 +94,15 @@ class DelegatingAuthenticator implements AuthenticatorInterface
      */
     public function present()
     {
-        // ...
+        foreach ($this->authenticators as $authenticator) {
+            $token = $authenticator->present();
+
+            if ($token instanceof TokenInterface) {
+                return $token;
+            }
+        }
+
+        return false;
     }
 
     /**
