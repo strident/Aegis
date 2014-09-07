@@ -92,6 +92,14 @@ class DelegatingAuthenticator implements AuthenticatorInterface
     /**
      * {@inheritDoc}
      */
+    public function present()
+    {
+        // ...
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public function supports(TokenInterface $token)
     {
         return (bool) $this->resolveAuthenticator($token);
@@ -100,7 +108,7 @@ class DelegatingAuthenticator implements AuthenticatorInterface
     /**
      * Delegate a authenticator for a token.
      *
-     * @param AuthenticationTokenInterface $token
+     * @param TokenInterface $token
      *
      * @return DelegatingAuthenticator
      */
@@ -119,7 +127,7 @@ class DelegatingAuthenticator implements AuthenticatorInterface
     /**
      * Resolve a token to its authenticator.
      *
-     * @param AuthenticationTokenInterface $token
+     * @param TokenInterface $token
      *
      * @return mixed
      */

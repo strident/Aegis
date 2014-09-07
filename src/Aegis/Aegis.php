@@ -11,14 +11,15 @@
 
 namespace Aegis;
 
-use Aegis\Exception\AuthenticationException;
 use Aegis\Authentication\Authenticator\AuthenticatorInterface;
 use Aegis\Authentication\Result;
 use Aegis\Authorization\AuthorizationManagerInterface;
+use Aegis\Exception\AuthenticationException;
 use Aegis\Storage\StorageInterface;
-use Aegis\User\UserInterface;
 use Aegis\Token\AnonymousToken;
+use Aegis\Token\StatelessTokenInterface;
 use Aegis\Token\TokenInterface;
+use Aegis\User\UserInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -48,7 +49,7 @@ class Aegis
     /**
      * Authenticate a token, or ask providers to provide a token to authenticate
      *
-     * @param AuthenticationTokenInterface $token
+     * @param TokenInterface $token
      *
      * @return Result
      */
@@ -76,7 +77,10 @@ class Aegis
         $result->setCode(Result::SUCCESS);
         $result->setToken($token);
 
-        $this->storage->write($token);
+        if ( ! $token instanceof StatelessTokenInterface) {
+            $this->storage->write($token);
+        }
+
         $this->setToken($token);
 
         return $result;
@@ -237,7 +241,7 @@ class Aegis
     /**
      * Set token.
      *
-     * @param AuthenticationTokenInterface $token
+     * @param TokenInterface $token
      *
      * @return Aegis
      */
@@ -251,7 +255,7 @@ class Aegis
     /**
      * Get token.
      *
-     * @return AuthenticationTokenInterface
+     * @return TokenInterface
      */
     public function getToken()
     {

@@ -93,7 +93,7 @@ class Result
     /**
      * Set token.
      *
-     * @param AuthenticationTokenInterface $token
+     * @param TokenInterface $token
      *
      * @return Result
      */
@@ -107,7 +107,7 @@ class Result
     /**
      * Get token.
      *
-     * @return AuthenticationTokenInterface
+     * @return TokenInterface
      */
     public function getToken()
     {

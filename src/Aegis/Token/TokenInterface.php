@@ -39,7 +39,7 @@ interface TokenInterface
      *
      * @param UserInterface $user
      *
-     * @return AuthenticationTokenInterface
+     * @return TokenInterface
      */
     public function setUser(UserInterface $user);
 
@@ -53,7 +53,7 @@ interface TokenInterface
     /**
      * Flush credentials attached to this token.
      *
-     * @return AuthenticationTokenInterface
+     * @return TokenInterface
      */
     public function flushCredentials();
 
@@ -69,7 +69,7 @@ interface TokenInterface
      *
      * @param boolean $authenticated
      *
-     * @return AuthenticationTokenInterface
+     * @return TokenInterface
      */
     public function setAuthenticated($authenticated);
 }

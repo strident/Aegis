@@ -24,16 +24,23 @@ interface AuthenticatorInterface
     /**
      * Authenticate a token.
      *
-     * @param AuthenticationTokenInterface $token
+     * @param TokenInterface $token
      *
-     * @return AuthenticationTokenInterface
+     * @return TokenInterface
      */
     public function authenticate(TokenInterface $token);
 
     /**
+     * Present a token if possible
+     *
+     * @return TokenInterface
+     */
+    public function present();
+
+    /**
      * Returns the name of the class that this provider supports.
      *
-     * @param AuthenticationTokenInterface $token
+     * @param TokenInterface $token
      *
      * @return string
      */
